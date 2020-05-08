@@ -1,4 +1,4 @@
-class TransactionController < ApplicationController
+class TransactionsController < ApplicationController
     def index 
         transactions = Transaction.all 
 
@@ -14,7 +14,7 @@ class TransactionController < ApplicationController
     def create
         transaction = Transaction.create(transaction_params)
 
-        render json: transaction, status :200
+        render json: transaction, status: 200
     end
 
     def update
@@ -31,6 +31,6 @@ class TransactionController < ApplicationController
     private 
 
     def transaction_params 
-        params.require(:transaction).permit(:date, :payee, :memo, :amount, :cleared)
+        params.require(:transaction).permit(:date, :payee, :memo, :amount, :cleared, :acount_id, :category_id)
     end
 end

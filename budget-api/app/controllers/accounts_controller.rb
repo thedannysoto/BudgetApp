@@ -1,4 +1,4 @@
-class AccountController < ApplicationController
+class AccountsController < ApplicationController
     def index 
         accounts = Account.all 
 
@@ -14,7 +14,7 @@ class AccountController < ApplicationController
     def create
         account = Account.create(account_params)
 
-        render json: account, status :200
+        render json: account, status: 200
     end
 
     def update
@@ -32,5 +32,5 @@ class AccountController < ApplicationController
 
     def account_params 
         params.require(:account).permit(:name, :balance)
-    endaccounts
+    end
 end

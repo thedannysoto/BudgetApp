@@ -1,4 +1,4 @@
-class CategoryController < ApplicationController
+class CategoriesController < ApplicationController
     def index 
         categories = Category.all 
 
@@ -14,7 +14,7 @@ class CategoryController < ApplicationController
     def create
         category = Category.create(category_params)
 
-        render json: category, status :200
+        render json: category, status: 200
     end
 
     def update
