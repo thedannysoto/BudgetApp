@@ -10,18 +10,20 @@
     
     <div class="h-screen m-0 flex overflow-hidden box-border">
         <div class="h-screen flex flex-col flex-shrink-0">
-            <div id="top-left" class="flex-shrink-0 bg-green-300 h-24">
-                <p>test A</p>
+            <div id="top-left" class="flex-shrink-0 bg-indigo-400 h-48 border-2">
+                <div id="budget-info" class="pt-4 pl-4 hover:bg-indigo-500">
+                    <h2 class="text-white font-sans font-bold pb-4">Your Budget</h2>
+                </div>
             </div>
-            <div id="sidebar" class="bg-blue-300 w-64 flex-grow-1 inline-flex h-screen">
+            <div id="sidebar" class="bg-indigo-400 w-64 flex-grow-1 inline-flex overflow-y-auto h-screen">
                 <p>test B</p>
             </div>
         </div>
         <div class="h-screen flex flex-col w-full">
-            <div id="top-right" class="flex-shrink-0 inline-flex bg-indigo-400 h-24">
+            <div id="top-bar" class="flex-shrink-0 inline-flex bg-indigo-800 h-24">
                 <p>test C</p>
             </div>
-            <div id="main" class="bg-gray-400 flex-grow-1 overflow-y-auto h-screen">
+            <div id="main" class="bg-gray-100 flex-grow-1 overflow-y-auto h-screen">
                 <p>test D</p>
             </div>
         </div>  
@@ -30,4 +32,7 @@
 
 
 </body>
+<footer>
+    <script src="src/main.js"></script>
+</footer>
 </html>
