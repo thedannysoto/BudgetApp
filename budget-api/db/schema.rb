@@ -17,16 +17,16 @@ ActiveRecord::Schema.define(version: 2020_05_07_194000) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "name"
-    t.decimal "amount"
+    t.float "amount", default: 0.0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
-    t.decimal "budgeted"
-    t.decimal "activity"
-    t.decimal "available"
+    t.float "budgeted", default: 0.0
+    t.float "activity", default: 0.0
+    t.float "available", default: 0.0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_194000) do
     t.date "date"
     t.string "payee"
     t.string "memo"
-    t.decimal "amount"
+    t.float "amount"
     t.boolean "cleared"
     t.bigint "account_id"
     t.bigint "category_id"

@@ -4,7 +4,7 @@ class CreateTransactions < ActiveRecord::Migration[6.0]
       t.date :date 
       t.string :payee
       t.string :memo 
-      t.decimal :amount 
+      t.float :amount 
       t.boolean :cleared 
       t.references :account, foreign_key: true
       t.references :category, foreign_key: true 
