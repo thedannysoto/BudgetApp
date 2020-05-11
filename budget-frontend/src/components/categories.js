@@ -1,14 +1,14 @@
-class Transactions {
+class Categories {
     constructor() {
-        this.transactions = [];
+        this.categories = [];
         this.adapter = new BudgetAdapter();
-        this.fetchAndLoadTransactions();
+        this.fetchAndLoadCategories();
         // this.bindEventListeners();
     }
 
-    fetchAndLoadTransactions() {
-        this.adapter.getTransactions().then(notes => {
-            console.log(notes)
+    fetchAndLoadCategories() {
+        this.adapter.getCategories().then(categories => {
+            console.log(categories[0].id)
             
             const tableData = [
                 {id:1, name:"danny", age:"32", col:"blue", dob:"10/25/1987"},

@@ -1,5 +1,6 @@
 class App {
     constructor() {
-        this.transactions = new Transactions()
+        this.categories = new Categories();
+        //this.transactions = new Transactions();
     }
 }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget App</title>
     <link rel="stylesheet" href="public/build/tailwind.css">
+    <link rel="stylesheet" href="node_modules/tabulator-tables/dist/css/materialize/tabulator_materialize.min.css">
 </head>
 <body>
     
@@ -24,7 +25,7 @@
                 <p>test C</p>
             </div>
             <div id="main" class="bg-gray-100 flex-grow-1 overflow-y-auto h-screen">
-                <p>test D</p>
+                <div id="example-table"></div>
             </div>
         </div>  
         
@@ -33,6 +34,9 @@
 
 </body>
 <footer>
+    <script type="text/javascript" src="node_modules/tabulator-tables/dist/js/tabulator.min.js"></script>
+    <script src="src/vendor/require.js"></script>
+    <script src="src/components/categories.js"></script>
     <script src="src/components/transactions.js"></script>
     <script src="src/adapters/BudgetAdapter.js"></script>
     <script src="src/components/app.js"></script>
