@@ -5,19 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget App</title>
     <link rel="stylesheet" href="public/build/tailwind.css">
-    <link rel="stylesheet" href="node_modules/tabulator-tables/dist/css/materialize/tabulator_materialize.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="node_modules/tabulator-tables/dist/css/tabulator_midnight.min.css">
 </head>
 <body>
     
     <div class="h-screen m-0 flex overflow-hidden box-border">
         <div class="h-screen flex flex-col flex-shrink-0">
-            <div id="top-left" class="flex-shrink-0 bg-indigo-400 h-48 border-2">
-                <div id="budget-info" class="pt-4 pl-4 hover:bg-indigo-500">
-                    <h2 class="text-white font-sans font-bold pb-4">Your Budget</h2>
+            <div id="sidebar-top" class="flex-shrink-0 bg-indigo-800 h-24">
+                <div id="budget-info" class="pt-6 pl-4 bg-indigo-800">
+                    <h2 class="font-bold text-white pb-4">Your Budget</h2>
                 </div>
             </div>
-            <div id="sidebar" class="bg-indigo-400 w-64 flex-grow-1 inline-flex overflow-y-auto h-screen">
-                <p>test B</p>
+            <div id="sidebar-bottom" class="bg-indigo-400 w-64 flex-grow-1 overflow-y-auto h-screen">
+                <div id="accounts-title" class="pt-4 pl-4 h-16 w-full bg-indigo-300">
+                    <h1 class="text-indigo-800 font-bold">Accounts</h1>
+                </div>
+                <div id="accounts-list" class="w-full">
+
+                </div>
             </div>
         </div>
         <div class="h-screen flex flex-col w-full">
@@ -25,7 +31,7 @@
                 <p>test C</p>
             </div>
             <div id="main" class="bg-gray-100 flex-grow-1 overflow-y-auto h-screen">
-                <div id="example-table"></div>
+                <div id="categories-table"></div>
             </div>
         </div>  
         
@@ -38,6 +44,7 @@
     <script src="src/vendor/require.js"></script>
     <script src="src/components/categories.js"></script>
     <script src="src/components/transactions.js"></script>
+    <script src="src/components/accounts.js"></script>
     <script src="src/adapters/BudgetAdapter.js"></script>
     <script src="src/components/app.js"></script>
     <script src="src/index.js"></script>
