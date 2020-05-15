@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "autoprefixer": "^9.7.6",
+    "moment": "^2.25.3",
     "postcss-cli": "^7.1.1",
     "tabulator-tables": "^4.6.3",
     "tailwindcss": "^1.4.6"

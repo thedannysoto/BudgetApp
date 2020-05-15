@@ -3,18 +3,18 @@ class Categories {
         this.categories = [];
         this.adapter = new BudgetAdapter();
         this.fetchAndLoadCategories();
-        // this.bindEventListeners();
+        
     }
 
     fetchAndLoadCategories() {
         this.adapter.getCategories().then(categories => {
-            console.log(categories)
             
+            // Category List Title
             const main = document.getElementById("main");
             const div = document.createElement("div");
             const title = document.createElement("h2");
             title.classList.add("text-indigo-800", "font-bold", "heading");
-            title.innerText = "Budget Categories"; 
+            title.innerText = "Category List"; 
             div.classList.add("w-full", "h-16", "pt-4", "pl-4", "bg-indigo-200");
             div.appendChild(title);
             main.appendChild(div);
@@ -28,7 +28,7 @@ class Categories {
             }
             
             const table = new Tabulator("#categories-table", {
-                height:832,
+                height:817,
                 data:tableData,
                 layout:"fitColumns",
                 columns:[
