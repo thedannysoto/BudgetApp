@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 2020_05_07_194000) do
     t.date "date"
     t.string "payee"
     t.string "memo"
-    t.float "amount"
-    t.boolean "cleared"
+    t.float "outflow"
+    t.float "inflow"
     t.bigint "account_id"
     t.bigint "category_id"
     t.datetime "created_at", precision: 6, null: false
