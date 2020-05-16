@@ -7,12 +7,17 @@ class Categories {
     }
 
     fetchAndLoadCategories() {
+       
         this.adapter.getCategories().then(categories => {
             
             // Category List Title
             const main = document.getElementById("main");
+            main.innerHTML = "";
+            const tableDiv = document.createElement("div")
             const div = document.createElement("div");
             const title = document.createElement("h2");
+            tableDiv.setAttribute("id", "categories-table")
+            main.appendChild(tableDiv);
             title.classList.add("text-indigo-800", "font-bold", "heading");
             title.innerText = "Category List"; 
             div.classList.add("w-full", "h-16", "pt-4", "pl-4", "bg-indigo-200");

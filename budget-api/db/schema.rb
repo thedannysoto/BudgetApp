@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(version: 2020_05_07_194000) do
     t.string "memo"
     t.float "outflow"
     t.float "inflow"
+    t.string "account_name"
+    t.string "category_name"
     t.bigint "account_id"
     t.bigint "category_id"
     t.datetime "created_at", precision: 6, null: false

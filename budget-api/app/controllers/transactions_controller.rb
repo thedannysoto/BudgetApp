@@ -19,7 +19,10 @@ class TransactionsController < ApplicationController
 
     def update
         transaction = Transaction.find(params[:id])
-        transaction.update(transaction_params)
+        if params[:columnName] == "Date"
+            transaction.date = params[:value]
+        end
+        transaction.save
         render json: transaction, status: 200
     end
 
@@ -31,6 +34,6 @@ class TransactionsController < ApplicationController
     private 
 
     def transaction_params 
-        params.require(:transaction).permit(:date, :payee, :memo, :amount, :cleared, :acount_id, :category_id)
+        params.require(:transaction).permit(:date, :payee, :memo, :amount, :cleared, :acount_id, :category_id, :id, :value, :columnName)
     end
 end

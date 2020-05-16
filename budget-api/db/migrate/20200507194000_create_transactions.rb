@@ -6,6 +6,8 @@ class CreateTransactions < ActiveRecord::Migration[6.0]
       t.string :memo 
       t.float :outflow
       t.float :inflow
+      t.string :account_name
+      t.string :category_name
       t.references :account, foreign_key: true
       t.references :category, foreign_key: true 
       t.timestamps

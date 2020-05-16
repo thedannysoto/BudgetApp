@@ -13,13 +13,16 @@
     <div class="h-screen m-0 flex overflow-hidden box-border">
         <div class="h-screen flex flex-col flex-shrink-0">
             <div id="sidebar-top" class="flex-shrink-0 bg-indigo-800 h-24">
-                <div id="budget-info" class="pt-6 pl-4 bg-indigo-800">
-                    <h2 class="font-bold text-white pb-4">Your Budget</h2>
+                <div id="budget-info" class="pt-6 pl-4 bg-indigo-800 hover:bg-indigo-600">
+                    <h2 class="font-bold text-white pb-4 w-full">Your Budget</h2>
                 </div>
             </div>
             <div id="sidebar-bottom" class="bg-indigo-400 w-64 flex-grow-1 overflow-y-auto h-screen">
                 <div id="accounts-title" class="pt-4 pl-4 h-16 w-full bg-indigo-300">
                     <h1 class="text-indigo-800 font-bold">Accounts</h1>
+                </div>
+                <div id="all-accounts" class="all-accounts w-full text-white pt-4 pl-4 font-black pb-3 border-b-2 hover:bg-indigo-500">
+                    <p class ="all-accounts full">All Accounts</p>
                 </div>
                 <div id="accounts-list" class="w-full">
 
@@ -30,7 +33,7 @@
             <div id="top-bar" class="flex-shrink-0 inline-flex bg-indigo-800 h-24">
                 
             </div>
-            <div id="main" class="bg-gray-100 flex-grow-1 overflow-y-auto h-screen">
+            <div id="main" class="bg-gray-900 flex-grow-1 overflow-y-auto h-screen">
                 <div id="categories-table"></div>
             </div>
         </div>  
