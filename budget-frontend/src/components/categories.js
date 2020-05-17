@@ -2,7 +2,6 @@ class Categories {
     constructor() {
         this.categories = [];
         this.adapter = new BudgetAdapter();
-        this.fetchAndLoadCategories();
         
     }
 

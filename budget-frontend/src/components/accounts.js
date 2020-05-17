@@ -42,31 +42,44 @@ class Accounts {
 
 const main = document.getElementById("main");
 
+const categoryList =[];
+const categoryFetch = new BudgetAdapter().getCategories().then(categories => {
+    for(let category of categories) {
+        categoryList.push(category.name);
+    }
+});
+
+console.log(categoryList);
+
+
 function refreshCategories() {
-    new Categories();
+    const refresh = new Categories();
+    refresh.fetchAndLoadCategories();
 }
 
 function viewAccount() {
     main.innerHTML = "";
     if (event.target.classList.contains("all-accounts")) {
-        addAccountTitle("All Accounts");
+        addAccountTitle("All Accounts", 0);
         fetchAndLoadTransactions();
         return;
     }
     if (event.target.classList.contains("account")) {
-        addAccountTitle(event.target.querySelectorAll("p")[0].innerText);
+        addAccountTitle(event.target.querySelectorAll("p")[0].innerText, event.target.dataset.id);
     } else {
-        addAccountTitle(event.target.innerText);
+        addAccountTitle(event.target.innerText, event.target.dataset.id);
     }
     fetchAndLoadTransactions(event.target.dataset.id)
 }
 
-function addAccountTitle(account) {
+function addAccountTitle(account, id) {
     const main = document.getElementById("main");
     const div = document.createElement("div");
     const title = document.createElement("h2");
     title.classList.add("text-indigo-800", "font-bold", "heading");
     title.innerText = account; 
+    div.dataset.id = id;
+    div.setAttribute("id", "tableHeading");
     div.classList.add("w-full", "h-16", "pt-4", "pl-4", "bg-indigo-200");
     div.appendChild(title);
     main.appendChild(div);
@@ -80,11 +93,7 @@ function fetchAndLoadTransactions(id=0) {
         div.setAttribute("id", "transactions-table");
         main.appendChild(div);
         const transactionTableData = [];
-        let transaction;
-        const allCategories = [];
-        for (transaction of transactions) {
-            allCategories.push(transaction.category_name);
-        }
+        let transaction;    
         if (id !== 0) {
             for(transaction of transactions) {
                 if (transaction.account_id === parseInt(id)) {
@@ -148,7 +157,13 @@ function fetchAndLoadTransactions(id=0) {
         
         const table = new Tabulator("#transactions-table", {
             cellEdited:function(cell) {
+                // const columnTitle = cell._cell.column.definition.title;
                 updateTransaction(cell);
+                // console.log(columnTitle === "Outflow" || columnTitle === "Inflow");
+                // if (columnTitle === "Inflow" || columnTitle === "Outflow") {
+                //     const heading = document.getElementById("tableHeading");
+                //     fetchAndLoadTransactions(heading.dataset.id);
+                // }
             },
             height:817,
             resizableColumns:false,
@@ -156,37 +171,22 @@ function fetchAndLoadTransactions(id=0) {
             layout:"fitColumns",
             columns:[
                 {title:"Id", field:"id", visible:false},
-                {title:"Date", field:"date", width:250, editor:dateEditor, sorter:"date", formatter:"datetime", formatterParams:{
+                {title:"Date", field:"date", width:150, editor:dateEditor, sorter:"date", formatter:"datetime", formatterParams:{
                     inputFormat:"YYYY-MM-DD",
                     outputFormat:"MM/DD/YYYY",
                     invalidPlaceholder:"(invalid date)",
                 }},
-                {title:"Payee", field:"payee"},
+                {title:"Payee", field:"payee", editor:"input"},
                 {title:"Category", field:"category_name", editor:"autocomplete", editorParams:{
                     showListOnEmpty:true,
                     freetext:false,
-                    allowEmpty:false,
-                    searchFunc:function(term, values){ //search for exact matches
-                        var matches = [];
-                
-                        values.forEach(function(value){
-                            //value - one of the values from the value property
-                
-                            if(value === term){
-                                matches.push(value);
-                            }
-                        });
-                
-                        return matches;
-                    },
-                    searchingPlaceholder:"Filtering ...",
-                    emptyPlaceholder:"(no matching results found)",
-                    values: allCategories,
+                    values: categoryList,
                     sortValuesList:"asc"
                 }},
+                {title:"Memo", field:"memo", editor:"input"},
                 {title:"Account", field:"account_name", visible:false},
-                {title:"Outflow", field:"outflow", formatter:"money", hozAlign:"center"},
-                {title:"Inflow", field:"inflow", formatter:"money", hozAlign:"center"}
+                {title:"Outflow", field:"outflow", formatter:"money", editor:"input", validator:["numeric", "min:0.01"], hozAlign:"center"},
+                {title:"Inflow", field:"inflow", formatter:"money", editor:"input", validator:["numeric", "min:0.01"], hozAlign:"center"}
             ]
         });
 
@@ -218,6 +218,10 @@ function updateTransaction(cell) {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
+            if (data.outflow || data.inflow) {
+                const heading = document.getElementById("tableHeading");
+                fetchAndLoadTransactions(heading.dataset.id);
+            }
         })
         .catch((error) => {
             console.error('Error:', error);
