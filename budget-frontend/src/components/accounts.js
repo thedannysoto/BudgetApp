@@ -49,6 +49,13 @@ const categoryFetch = new BudgetAdapter().getCategories().then(categories => {
     }
 });
 
+const accountList = [];
+const accountFetch = new BudgetAdapter().getAccounts().then(accounts => {
+    for (let account of accounts) {
+        accountList.push(account.name);
+    }
+});
+
 console.log(categoryList);
 
 
@@ -75,14 +82,22 @@ function viewAccount() {
 function addAccountTitle(account, id) {
     const main = document.getElementById("main");
     const div = document.createElement("div");
+    const button = document.createElement("p");
     const title = document.createElement("h2");
-    title.classList.add("text-indigo-800", "font-bold", "heading");
-    title.innerText = account; 
+
+    title.classList.add("text-indigo-800", "font-bold", "heading", "flex");
+    title.innerText = account;
+    button.classList.add("modal-open", "text-white", "bg-indigo-800", "rounded-full", "font-bold", "hover:bg-indigo-600", "flex", "h-8", "pb-1", "pt-1", "px-2", "ml-4"); 
+    button.setAttribute("id", "add-new-transaction");
+    button.innerText = "Add New Transaction";
     div.dataset.id = id;
     div.setAttribute("id", "tableHeading");
-    div.classList.add("w-full", "h-16", "pt-4", "pl-4", "bg-indigo-200");
+    div.classList.add("w-full", "h-16", "pt-4", "pl-4", "bg-indigo-200", "flex");
     div.appendChild(title);
-    main.appendChild(div);
+    if (id !== 0) {
+    div.appendChild(button);
+    }
+    main.appendChild(div)
 }
 
 function fetchAndLoadTransactions(id=0) {
@@ -157,21 +172,18 @@ function fetchAndLoadTransactions(id=0) {
         
         const table = new Tabulator("#transactions-table", {
             cellEdited:function(cell) {
-                // const columnTitle = cell._cell.column.definition.title;
                 updateTransaction(cell);
-                // console.log(columnTitle === "Outflow" || columnTitle === "Inflow");
-                // if (columnTitle === "Inflow" || columnTitle === "Outflow") {
-                //     const heading = document.getElementById("tableHeading");
-                //     fetchAndLoadTransactions(heading.dataset.id);
-                // }
             },
             height:817,
             resizableColumns:false,
             data:transactionTableData,
+            initialSort:[
+                {column:"Date", dir:"desc"}
+            ],
             layout:"fitColumns",
             columns:[
                 {title:"Id", field:"id", visible:false},
-                {title:"Date", field:"date", width:150, editor:dateEditor, sorter:"date", formatter:"datetime", formatterParams:{
+                {title:"Date", field:"date", editor:dateEditor, sorter:"date", formatter:"datetime", formatterParams:{
                     inputFormat:"YYYY-MM-DD",
                     outputFormat:"MM/DD/YYYY",
                     invalidPlaceholder:"(invalid date)",
@@ -184,16 +196,29 @@ function fetchAndLoadTransactions(id=0) {
                     sortValuesList:"asc"
                 }},
                 {title:"Memo", field:"memo", editor:"input"},
-                {title:"Account", field:"account_name", visible:false},
                 {title:"Outflow", field:"outflow", formatter:"money", editor:"input", validator:["numeric", "min:0.01"], hozAlign:"center"},
-                {title:"Inflow", field:"inflow", formatter:"money", editor:"input", validator:["numeric", "min:0.01"], hozAlign:"center"}
+                {title:"Inflow", field:"inflow", formatter:"money", editor:"input", validator:["numeric", "min:0.01"], hozAlign:"center"},
+                {title:"", field: "hold"},
+                {title:"Account", field:"account_name", visible:false, editor:"autocomplete", editorParams:{
+                    showListOnEmpty:true,
+                    freetext:false,
+                    values: accountList,
+                    sortValuesList:"asc"
+                }}
             ]
         });
 
         if (id === 0) {
+            // table.modules.layout.mode = "fitDataStretch";
             table.showColumn("account_name");
+            table.hideColumn("hold");
+            table.redraw(true);  
+        } else {
+            // Bind Event Listener to Add New Transaction Button
+            setModal();
+            document.getElementById("transaction-save").addEventListener("click", validateTransaction);
+            document.getElementById("amount-error").style.display = "none";
         }
-        
 
             const transactionTable = document.getElementById("transactions-table");
             main.appendChild(transactionTable);
@@ -228,3 +253,7 @@ function updateTransaction(cell) {
         });
     }
 }
+
+// function addNewTransaction() {
+//     console.log("test");
+// }

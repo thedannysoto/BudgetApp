@@ -7,13 +7,25 @@ class TransactionsController < ApplicationController
 
     def show
         transaction = Transaction.find(params[:id])
-
         render json: transaction, status: 200
     end
-
+    
     def create
-        transaction = Transaction.create(transaction_params)
-
+        transaction = Transaction.new
+        transaction.date = params[:date]
+        transaction.payee = params[:payee]
+        transaction.memo = params[:memo]
+        transaction.category = Category.find_or_create_by(:name => params[:category])
+        transaction.category_name = params[:category]
+        if params[:outflow] == "Outflow"
+            transaction.outflow = params[:amount].to_f
+        else 
+            transaction.inflow = params[:amount].to_f 
+        end
+        transaction.account = Account.find(params[:account])
+        transaction.account_name = transaction.account.name
+        transaction.save
+        
         render json: transaction, status: 200
     end
 
@@ -34,6 +46,9 @@ class TransactionsController < ApplicationController
         elsif params[:columnName] == "Inflow"
             transaction.inflow = params[:value]
             transaction.outflow = nil 
+        elsif params[:columnName] == "Account"
+            transaction.account = Account.find_by(:name => params[:value])
+            transaction.account_name = params[:value]
         end
         transaction.save
         render json: transaction, status: 200

@@ -41,6 +41,80 @@
     </div>
 
 
+
+<!-- Begin Modal HTML -->
+  <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+    <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+    
+    <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+      
+      <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+        <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+          <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+        </svg>
+        <span class="text-sm">(Esc)</span>
+      </div>
+
+      <!-- Add margin if you want to see some of the overlay behind the modal-->
+      <div class="modal-content py-4 text-left px-6">
+        <!--Title-->
+        <div class="flex justify-between items-center pb-3">
+          <p class="text-2xl font-bold">Add New Transaction</p>
+          <div class="modal-close cursor-pointer z-50">
+            <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+              <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!--Body-->
+        <div id="new-transaction-modal-body">
+        <div class="flex w-full justify-between">
+            <p class="font-bold pt-1">Date: </p>
+            <input type="date" id="new-transaction-date" min="1900-01-01" max="2050-12-31" class="border-2 w-48">
+        </div>
+        <div class="flex w-full mt-2 justify-between">
+            <p class="font-bold pt-1">Payee: </p>
+            <input type="text" id="new-transaction-payee" class="border-2 w-48">
+        </div>
+        <div class="flex w-full mt-2 justify-between">
+            <p class="font-bold pt-1">Category: </p>
+            <input type="text" id="new-transaction-category" class="border-2 w-48">
+        </div>
+        <div class="flex w-full mt-2 justify-between">
+            <p class="font-bold pt-1">Memo: </p>
+            <input type="text" id="new-transaction-memo" class="border-2 w-48">
+        </div>
+        <div class="flex w-full mt-2 justify-between">
+            <p class="font-bold pt-1">Amount: </p>
+            <input type="text" id="new-transaction-amount" class="border-2 w-48">
+        </div>
+        <div id="amount-error" class="flex w-full mt-2 justify-end">
+            <p id="amount-error-text" class="text-red-600 font-bold">
+                Amount must be greater than 0
+            </p>
+        </div>
+        <div class="flex justify-end pt-2 mb-4">
+            <input type="radio" id="new-transaction-outflow" name="outflow" class="mt-1" value="Outflow" checked>
+            <label for="outflow" class="pl-2 pr-4">Outflow</label>
+            <input type="radio" id="new-transaction-inflow" name="outflow" class="mt-1" value="Inflow">
+            <label for="inflow" class="pl-2 pr-4">Inflow</label>
+        </div>
+
+        </div>
+
+        <!--Footer-->
+        <div class="flex justify-end pt-2">
+          <button id="transaction-save" class="bg-indigo-500 rounded-lg px-3 py-1 w-48 text-white hover:bg-indigo-400">Save</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+<!-- End Modal HTML -->
+
+
+
 </body>
 <footer>
     <script type="text/javascript" src="node_modules/tabulator-tables/dist/js/tabulator.min.js"></script>
@@ -52,5 +126,7 @@
     <script src="src/components/accounts.js"></script>
     <script src="src/components/app.js"></script>
     <script src="src/index.js"></script>
+    <script src="src/components/newTransactionModal.js"></script>
+    <script src="src/components/newTransaction.js"></script>
 </footer>
 </html>
