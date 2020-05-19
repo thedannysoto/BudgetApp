@@ -84,6 +84,13 @@ function addAccountTitle(account, id) {
     const div = document.createElement("div");
     const button = document.createElement("p");
     const title = document.createElement("h2");
+    const balanceDiv = document.createElement("div");
+    const balance = document.createElement("p");
+
+    balanceDiv.classList.add("flex", "absolute", "right-0", "mr-24", "px-4", "pt-2", "-mt-1", "bg-gray-800", "w-48", "border-white", "border-2");
+    balance.classList.add("text-white", "font-bold", "mb-2")
+    balance.setAttribute("id", "account-balance");
+    balanceDiv.appendChild(balance);
 
     title.classList.add("text-indigo-800", "font-bold", "heading", "flex");
     title.innerText = account;
@@ -96,6 +103,8 @@ function addAccountTitle(account, id) {
     div.appendChild(title);
     if (id !== 0) {
     div.appendChild(button);
+    div.appendChild(balanceDiv);
+    fetchAccountBalance(id);
     }
     main.appendChild(div)
 }
@@ -178,16 +187,28 @@ function fetchAndLoadTransactions(id=0) {
             resizableColumns:false,
             data:transactionTableData,
             initialSort:[
-                {column:"Date", dir:"desc"}
+                {column:"date", dir:"desc"}
+            ],
+            rowContextMenu:[
+                {
+                    label:"Delete Row",
+                    action:function(e, row){
+                        deleteTransaction(row._row.data.id);
+                        row.delete();
+                    }
+                }
             ],
             layout:"fitColumns",
             columns:[
                 {title:"Id", field:"id", visible:false},
-                {title:"Date", field:"date", editor:dateEditor, sorter:"date", formatter:"datetime", formatterParams:{
+                {title:"Date", field:"date", editor:dateEditor, formatter:"datetime", formatterParams:{
                     inputFormat:"YYYY-MM-DD",
                     outputFormat:"MM/DD/YYYY",
                     invalidPlaceholder:"(invalid date)",
-                }},
+                }, sorter:"date", sorterParams:{
+                    format:"MM/DD/YYYY"
+                }
+            },
                 {title:"Payee", field:"payee", editor:"input"},
                 {title:"Category", field:"category_name", editor:"autocomplete", editorParams:{
                     showListOnEmpty:true,
@@ -254,6 +275,22 @@ function updateTransaction(cell) {
     }
 }
 
-// function addNewTransaction() {
-//     console.log("test");
-// }
+function fetchAccountBalance(id) {
+    fetch(`http://localhost:3000/accounts/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+        
+    })
+    .then(response => response.json())
+    .then(data => {
+        const balance = document.getElementById("account-balance");
+        balance.innerText = "Balance: " + " $" + data.toFixed(2);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
+
+}

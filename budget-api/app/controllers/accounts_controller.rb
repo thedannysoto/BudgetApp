@@ -7,8 +7,9 @@ class AccountsController < ApplicationController
 
     def show
         account = Account.find(params[:id])
-
-        render json: account, status: 200
+        amount = sprintf("%.2f", (account.get_balance(account)))
+        # amount = sprintf("%.2f", (account.amount))
+        render json: amount, status: 200
     end
 
     def create

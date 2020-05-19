@@ -2,7 +2,7 @@ function validateTransaction() {
     const newDate = document.getElementById("new-transaction-date");
     const newPayee = document.getElementById("new-transaction-payee");
     const newCategory = document.getElementById("new-transaction-category");
-    const newMemo = document.getElementById("new-transaction-memo").value;
+    const newMemo = document.getElementById("new-transaction-memo");
     const newAmount = document.getElementById("new-transaction-amount");
     let newOutflow = document.querySelectorAll('input[name="outflow"]');
     const account = document.getElementById("tableHeading").dataset.id;
