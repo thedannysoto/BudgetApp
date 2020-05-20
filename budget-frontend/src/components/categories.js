@@ -23,6 +23,11 @@ class Categories {
             div.appendChild(title);
             main.appendChild(div);
 
+            // Current month 
+            const today = moment();
+            const month = document.getElementById("current-month-text");
+            month.innerHTML = today.format('MMMM YYYY');
+
 
 
             const tableData = [];
@@ -32,12 +37,15 @@ class Categories {
             }
             
             const table = new Tabulator("#categories-table", {
+                cellEdited:function(cell) {
+                    updateCategory(cell);
+                },
                 height:817,
                 data:tableData,
                 layout:"fitColumns",
                 columns:[
                     {title:"Name", field:"name", width:950},
-                    {title:"Budgeted", field:"budgeted", formatter:"money", hozAlign:"center"},
+                    {title:"Budgeted", field:"budgeted", formatter:"money", editor:"input", validator:["numeric", "min:0"], hozAlign:"center"},
                     {title:"Activity", field:"activity", formatter:"money", hozAlign:"center"},
                     {title:"Available", field:"available", formatter:"money", hozAlign:"center"}
                 ]
@@ -48,4 +56,9 @@ class Categories {
 
         });
     }
+}
+
+function reloadCategories() {
+    const reload = new Categories();
+    reload.fetchAndLoadCategories();
 }

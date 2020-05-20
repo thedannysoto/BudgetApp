@@ -3,9 +3,19 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-#budget-info {
+#budget-info, #current-month {
     font-size: 25px;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+#budgeted-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+#budgeted-amount {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 26px;
 }
 
 /* For Modal */

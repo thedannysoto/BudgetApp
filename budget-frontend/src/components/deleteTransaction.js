@@ -12,8 +12,7 @@ function deleteTransaction(id) {
         })
         .then(response => {
             console.log('Success:');
-            const heading = document.getElementById("tableHeading");
-            fetchAndLoadTransactions(heading.dataset.id);
+            reloadAccount();
         })
         .catch((error) => {
             console.error('Error:', error);

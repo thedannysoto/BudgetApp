@@ -62,10 +62,10 @@ function saveTransaction(data) {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            const heading = document.getElementById("tableHeading");
-            fetchAndLoadTransactions(heading.dataset.id);
+            reloadAccount();
         })
         .catch((error) => {
             console.error('Error:', error);
         });
 }
+

@@ -87,8 +87,8 @@ function addAccountTitle(account, id) {
     const balanceDiv = document.createElement("div");
     const balance = document.createElement("p");
 
-    balanceDiv.classList.add("flex", "absolute", "right-0", "mr-24", "px-4", "pt-2", "-mt-1", "bg-gray-800", "w-48", "border-white", "border-2");
-    balance.classList.add("text-white", "font-bold", "mb-2")
+    balanceDiv.classList.add("flex", "absolute", "right-0", "mr-24", "px-4", "pt-2", "-mt-1", "bg-gray-800", "w-auto", "border-white", "border-2");
+    balance.classList.add("font-bold", "mb-2")
     balance.setAttribute("id", "account-balance");
     balanceDiv.appendChild(balance);
 
@@ -286,11 +286,24 @@ function fetchAccountBalance(id) {
     .then(response => response.json())
     .then(data => {
         const balance = document.getElementById("account-balance");
+        if (data < 0) {
+            balance.classList.add("text-red-500");
+        } else {
+            balance.classList.add("text-green-500");
+        }
         balance.innerText = "Balance: " + " $" + data.toFixed(2);
     })
     .catch((error) => {
         console.error('Error:', error);
     });
 
+}
 
+function reloadAccount() {
+    const tableHeading = document.getElementById("tableHeading");
+    const heading = tableHeading.querySelector("h2").innerText;
+    const main = document.getElementById("main");
+    main.innerHTML = "";
+    addAccountTitle(heading, tableHeading.dataset.id)
+    fetchAndLoadTransactions(tableHeading.dataset.id);
 }

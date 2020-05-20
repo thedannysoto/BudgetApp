@@ -30,8 +30,20 @@
             </div>
         </div>
         <div class="h-screen flex flex-col w-full">
-            <div id="top-bar" class="flex-shrink-0 inline-flex bg-indigo-800 h-24">
-                
+            <div id="top-bar" class="flex-shrink-0 inline-flex bg-indigo-800 h-24 justify-center">
+                <div id="current-month" class="mr-40 my-auto w-auto bg-gray-800 px-2 py-4 border-2">
+                    <h2 id="current-month-text" class="text-white font-bold">
+                        
+                    </h2>
+                </div>
+                <div id="to-be-budgeted" class="my-auto w-auto bg-gray-800 p-1 border-2 text-center">
+                    <h2 id="budgeted-title" class="text-white font-bold">
+                        To Be Budgeted:
+                    </h2>
+                    <h2 id="budgeted-amount" class="text-green-500 font-bold">
+                        
+                    </h2>
+                </div>
             </div>
             <div id="main" class="bg-gray-900 flex-grow-1 overflow-y-auto h-screen">
                 <div id="categories-table"></div>
@@ -129,5 +141,6 @@
     <script src="src/components/newTransactionModal.js"></script>
     <script src="src/components/newTransaction.js"></script>
     <script src="src/components/deleteTransaction.js"></script>
+    <script src="src/components/updateCategories.js"></script>
 </footer>
 </html>
