@@ -11,7 +11,6 @@ function deleteTransaction(id) {
             body: JSON.stringify(data),
         })
         .then(response => {
-            console.log('Success:');
             reloadAccount();
         })
         .catch((error) => {

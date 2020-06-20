@@ -1,10 +1,6 @@
 class Accounts {
     constructor() {
-        this.accounts = ["hello"];
         this.adapter = new BudgetAdapter();
-        this.transactions = this.adapter.getTransactions().then(transactions => {
-            return transactions;
-        });
         this.fetchAndLoadAccounts();
     }
 
@@ -12,7 +8,6 @@ class Accounts {
         this.adapter.getAccounts().then(accounts => {
             const list = document.getElementById("accounts-list");
             for(let account of accounts) {
-                console.log(account);
                 const div = document.createElement("div");
                 div.classList.add("w-full", "hover:bg-indigo-500", "py-3", "text-white", "account");
                 div.dataset.id = account.id;
@@ -37,6 +32,7 @@ class Accounts {
         document.getElementById("all-accounts").addEventListener("click", viewAccount);
         // Your Budget
         document.getElementById("budget-info").addEventListener("click", refreshCategories);
+        
     }
 }
 
@@ -110,6 +106,10 @@ function addAccountTitle(account, id) {
 }
 
 function fetchAndLoadTransactions(id=0) {
+
+    // Hide To be Budgeted
+    const budgeted = document.getElementById("to-be-budgeted");
+    budgeted.style.display = "none";
     const adapter = new BudgetAdapter();
     adapter.getTransactions().then(transactions => {
         const main = document.getElementById("main");
@@ -132,12 +132,7 @@ function fetchAndLoadTransactions(id=0) {
 
         //Create Date Editor for Table
         var dateEditor = function(cell, onRendered, success, cancel){
-            //cell - the cell component for the editable cell
-            //onRendered - function to call when the editor has been rendered
-            //success - function to call to pass the successfuly updated value to Tabulator
-            //cancel - function to call to abort the edit and return to a normal cell
-        
-            //create and style input
+            
             var cellValue = moment(cell.getValue(), "YYYY-MM-DD").format("MM/DD/YYYY");
             input = document.createElement("input");
         

@@ -28,12 +28,30 @@ class Categories {
             const month = document.getElementById("current-month-text");
             month.innerHTML = today.format('MMMM YYYY');
 
+            // To Be Budgeted 
+            const budgeted = document.getElementById("to-be-budgeted");
+            budgeted.style.display = "block";
 
-
+            
+            
             const tableData = [];
             let category;
             for(category of categories) {
-                tableData.push(category);
+                if(category.id !== 7 && category.id !== 16) {
+                    tableData.push(category);
+                } else {
+                    // To be budgeted
+                    const budgeted = document.getElementById("budgeted-amount");
+                    budgeted.innerHTML = "$" + category.available.toFixed(2);
+                    if (category.available < 0) {
+                        budgeted.classList.remove("text-green-500");
+                        budgeted.classList.add("text-red-500");
+                    } else {
+                        budgeted.classList.remove("text-red-500");
+                        budgeted.classList.add("text-green-500");
+                    }
+                    
+                }
             }
             
             const table = new Tabulator("#categories-table", {
@@ -41,6 +59,9 @@ class Categories {
                     updateCategory(cell);
                 },
                 height:817,
+                initialSort:[
+                    {column:"name", dir:"asc"}
+                ],
                 data:tableData,
                 layout:"fitColumns",
                 columns:[

@@ -19,8 +19,11 @@ class CategoriesController < ApplicationController
 
     def update
         category = Category.find(params[:id])
+        budgeted = Category.find(7)
         category[:available] -= (category[:budgeted] - params[:value].to_f)
+        budgeted.available += (category[:budgeted] - params[:value].to_f)
         category[:budgeted] = params[:value].to_f
+        budgeted.save
         category.save
         render json: category, status: 200
     end

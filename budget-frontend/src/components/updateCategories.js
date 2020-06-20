@@ -12,7 +12,6 @@ function updateCategory(cell) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Success:', data);
             reloadCategories();       
     })
     .catch((error) => {

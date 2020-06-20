@@ -48,6 +48,12 @@ function validateTransaction() {
         };
         toggleModal();
         saveTransaction(data);
+
+        newDate.value = "";
+        newPayee.value = "";
+        newCategory.value = "";
+        newMemo.value = "";
+        newAmount.value = "";
     }
 }
 
@@ -61,7 +67,8 @@ function saveTransaction(data) {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Success:', data);
+            console.log(data);
+            
             reloadAccount();
         })
         .catch((error) => {
